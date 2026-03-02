@@ -1,4 +1,4 @@
-const CACHE_NAME = 'coach-manu-v3';
+const CACHE_NAME = 'coach-manu-v5';
 const assets = ['./', './index.html'];
 
 self.addEventListener('install', event => {
