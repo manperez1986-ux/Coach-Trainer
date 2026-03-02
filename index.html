@@ -144,9 +144,6 @@
         }
 
         .grid-sets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        
-        /* Pequeño texto de ayuda debajo de Reps */
-        .hint { font-size: 10px; color: #8E8E93; margin-top: -10px; margin-bottom: 10px; padding-left: 5px; }
     </style>
 </head>
 <body>
@@ -200,12 +197,8 @@
 
             <div class="grid-sets">
                 <div><label>SERIES</label><input type="number" id="sets" placeholder="4"></div>
-                <div>
-                    <label>REPS</label>
-                    <input type="text" id="reps" placeholder="10-12 o fallo">
-                </div>
+                <div><label>REPS</label><input type="text" id="reps" placeholder="10-12 o fallo"></div>
             </div>
-            <p class="hint">Escribe "fallo" para series al límite.</p>
 
             <button class="btn btn-add" style="margin-top:5px;" onclick="addRoutine()">Añadir a la Rutina 📥</button>
         </div>
@@ -247,10 +240,10 @@
         "Trapecio 🐂": ["Encogimientos Mancuerna", "Encogimientos Barra", "Remo al Mentón"]
     };
 
-    let miDB = JSON.parse(localStorage.getItem('manuGymMax_v11')) || dbBase;
+    let miDB = JSON.parse(localStorage.getItem('manuGymMax_v12')) || dbBase;
     let rutinaActual = [];
 
-    function saveDB() { localStorage.setItem('manuGymMax_v11', JSON.stringify(miDB)); }
+    function saveDB() { localStorage.setItem('manuGymMax_v12', JSON.stringify(miDB)); }
 
     function updateList() {
         const m = document.getElementById('mGroup').value;
@@ -263,18 +256,21 @@
     }
 
     function showCustom() {
-        if(!document.getElementById('mGroup').value) return;
+        const m = document.getElementById('mGroup').value;
+        if(!m) return;
         document.getElementById('customArea').style.display = 'block';
     }
 
     function saveCustom() {
         const m = document.getElementById('mGroup').value;
         const name = document.getElementById('customName').value;
-        if(name && !miDB[m].includes(name)) {
-            miDB[m].push(name);
-            saveDB();
-            updateList();
-            document.getElementById('exSelect').value = name;
+        if(name && m) {
+            if(!miDB[m].includes(name)) {
+                miDB[m].push(name);
+                saveDB();
+                updateList();
+                document.getElementById('exSelect').value = name;
+            }
         }
         document.getElementById('customArea').style.display = 'none';
         document.getElementById('customName').value = "";
@@ -283,42 +279,51 @@
     function deleteEx() {
         const m = document.getElementById('mGroup').value;
         const e = document.getElementById('exSelect').value;
-        if(e && confirm(`¿Borrar permanentemente ${e}?`)) {
+        if(m && e && confirm(`¿Borrar ${e}?`)) {
             miDB[m] = miDB[m].filter(x => x !== e);
             saveDB();
             updateList();
         }
     }
 
+    // FUNCIÓN REESCRITA PARA AGREGAR SIN LÍMITES
     function addRoutine() {
         const m = document.getElementById('mGroup').value;
         const e = document.getElementById('exSelect').value;
         const s = document.getElementById('sets').value || "4";
         let r = document.getElementById('reps').value || "10-12";
         
-        // Si el usuario escribe "fallo" o "al fallo", lo estandarizamos
-        if(r.toLowerCase().includes("fallo")) {
-            r = "al fallo 🧨";
+        if(r.toLowerCase().includes("fallo")) r = "al fallo 🧨";
+
+        // Solo requiere Músculo y Ejercicio, sin importar cuántos lleves ya.
+        if(m && e) {
+            rutinaActual.push({ m, e, s, r });
+            render();
+            // Limpia campos de esfuerzo para el siguiente ejercicio
+            document.getElementById('sets').value = "";
+            document.getElementById('reps').value = "";
         }
-
-        if(!m || !e) return;
-
-        rutinaActual.push({ m, e, s, r });
-        render();
-        
-        document.getElementById('sets').value = "";
-        document.getElementById('reps').value = "";
     }
 
     function render() {
         const d = document.getElementById('display');
         d.innerHTML = "";
         rutinaActual.forEach((x, i) => {
-            d.innerHTML += `<div class="rutina-item"><div><b>${x.e}</b><br><small style="color:#8E8E93">${x.m} • ${x.s}x${x.r}</small></div><div onclick="remove(${i})" style="color:var(--danger); font-weight:800; padding:10px;">✕</div></div>`;
+            d.innerHTML += `
+                <div class="rutina-item">
+                    <div>
+                        <b style="font-size:15px;">${x.e}</b><br>
+                        <small style="color:#8E8E93">${x.m} • ${x.s}x${x.r}</small>
+                    </div>
+                    <div onclick="remove(${i})" style="color:var(--danger); font-weight:800; padding:10px; cursor:pointer; font-size:18px;">✕</div>
+                </div>`;
         });
     }
 
-    function remove(i) { rutinaActual.splice(i,1); render(); }
+    function remove(i) {
+        rutinaActual.splice(i, 1);
+        render();
+    }
 
     function shareWA() {
         const name = document.getElementById('cName').value || "Campeón";
