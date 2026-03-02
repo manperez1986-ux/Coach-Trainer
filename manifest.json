@@ -1,0 +1,17 @@
+{
+  "short_name": "CoachManu",
+  "name": "Manu Coach Trainer Elite",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/843/843258.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#F2F2F7",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#FFFFFF"
+}
