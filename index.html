@@ -22,9 +22,8 @@
             --text: #000000;
         }
 
-        /* RESET PARA EVITAR DESBORDES */
         * {
-            box-sizing: border-box; /* Fundamental para que el padding no ensanche los bordes */
+            box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -33,7 +32,7 @@
             position: fixed;
             width: 100%;
             height: 100%;
-            overflow-x: hidden; /* Evita el scroll lateral */
+            overflow-x: hidden;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             background-color: var(--bg);
@@ -41,10 +40,9 @@
             padding: 0;
         }
 
-        /* CONTENEDOR PRINCIPAL AJUSTADO */
         .app-container {
             width: 100%;
-            max-width: 500px; /* Para que en pantallas grandes no se vea gigante */
+            max-width: 500px;
             margin: 0 auto;
             padding: 20px;
             padding-top: env(safe-area-inset-top, 20px);
@@ -68,7 +66,7 @@
             margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border: none;
-            width: 100%; /* Asegura que se ajuste al contenedor */
+            width: 100%;
         }
 
         label {
@@ -146,6 +144,9 @@
         }
 
         .grid-sets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        /* Pequeño texto de ayuda debajo de Reps */
+        .hint { font-size: 10px; color: #8E8E93; margin-top: -10px; margin-bottom: 10px; padding-left: 5px; }
     </style>
 </head>
 <body>
@@ -199,8 +200,12 @@
 
             <div class="grid-sets">
                 <div><label>SERIES</label><input type="number" id="sets" placeholder="4"></div>
-                <div><label>REPS</label><input type="text" id="reps" placeholder="12"></div>
+                <div>
+                    <label>REPS</label>
+                    <input type="text" id="reps" placeholder="10-12 o fallo">
+                </div>
             </div>
+            <p class="hint">Escribe "fallo" para series al límite.</p>
 
             <button class="btn btn-add" style="margin-top:5px;" onclick="addRoutine()">Añadir a la Rutina 📥</button>
         </div>
@@ -220,32 +225,32 @@
     }
 
     const dbBase = {
-        "Cuádriceps 🦵": ["Sentadilla con Barra", "Prensa 45°", "Sentadilla Hack", "Extensiones", "Sentadilla Búlgara", "Zancadas", "Leg Press Horizontal"],
-        "Femorales 🍗": ["Peso Muerto Rumano", "Curl Femoral Tumbado", "Curl Femoral Sentado", "Buenos Días", "Nordic Curl"],
-        "Glúteos 🍑": ["Hip Thrust", "Puente de Glúteo", "Kickbacks Polea", "Step Up Glúteo", "Abducción Máquina"],
-        "Pantorrillas 👣": ["Elevación de Pie", "Elevación Sentado", "Prensa Pantorrillas"],
-        "Aductores 🔄": ["Máquina Aductores", "Aductor Polea", "Sentadilla Sumo Profunda"],
-        "Abductores ↔️": ["Máquina Abductores", "Abducción con Banda", "Abducción Polea"],
-        "Pecho Superior ⬆️": ["Press Inclinado Barra", "Press Inclinado Mancuernas", "Cruce Poleas Bajas"],
-        "Pecho Medio ⬅️➡️": ["Press Banca Plano", "Press Mancuernas", "Peck Deck", "Hammer Press"],
-        "Pecho Inferior ⬇️": ["Press Declinado", "Dips (Fondos)", "Cruce Poleas Altas"],
-        "Espalda Amplitud 🦅": ["Dominadas", "Jalón al Pecho", "Pull-over Polea Alta"],
-        "Espalda Grosor 🚣": ["Remo con Barra", "Remo Gironda", "Remo T", "Remo Mancuerna"],
-        "Espalda Baja 🪵": ["Hiperextensiones Lumbar", "Peso Muerto Convencional", "Rack Pulls"],
-        "Hombro Frontal 🔘": ["Press Militar", "Press Arnold", "Elevación Frontal"],
-        "Hombro Lateral 🔘": ["Elevaciones Laterales", "Laterales Polea", "Laterales Máquina"],
-        "Hombro Posterior 🔘": ["Pájaros Mancuerna", "Facepull", "Peck Deck Inverso"],
-        "Bíceps 💪": ["Curl Barra Z", "Curl Martillo", "Curl Scott", "Curl Alterno"],
-        "Tríceps 🦾": ["Press Francés Barra Z", "Polea Cuerda", "Copa Mancuerna", "Dips Paralelas"],
-        "Antebrazos ✊": ["Curl Muñeca Supino", "Curl Muñeca Prono", "Paseo Granjero"],
-        "Abdomen 🍫": ["Crunch Polea Alta", "Elevación Piernas", "Plancha", "Rueda Abdominal"],
+        "Cuádriceps 🦵": ["Sentadilla con Barra", "Prensa 45°", "Sentadilla Hack", "Extensiones", "Sentadilla Búlgara", "Zancadas", "Leg Press Horizontal", "Prensa Unilateral", "Sentadilla Frontal", "Landmine Squat", "Step Up Alto", "Sentadilla Sissy"],
+        "Femorales 🍗": ["Peso Muerto Rumano", "Curl Femoral Tumbado", "Curl Femoral Sentado", "Curl Femoral de Pie", "Buenos Días", "Glute Ham Raise", "Peso Muerto Piernas Semirrígidas", "Nordic Curl"],
+        "Glúteos 🍑": ["Hip Thrust", "Puente de Glúteo", "Kickbacks Polea", "Step Up Glúteo", "Abducción Máquina", "Peso Muerto Sumo", "Frog Pumps", "Hiperextensión 45°"],
+        "Pantorrillas 👣": ["Elevación de Pie", "Elevación Sentado (Sóleo)", "Prensa Pantorrillas", "Elevaciones tipo Burro", "Elevación Unilateral"],
+        "Aductores 🔄": ["Máquina Aductores", "Aductor Polea Baja", "Copenhague Plank", "Sentadilla Sumo Profunda"],
+        "Abductores ↔️": ["Máquina Abductores", "Abducción con Banda", "Abducción Polea Baja", "Monster Walk"],
+        "Pecho Superior ⬆️": ["Press Inclinado Barra", "Press Inclinado Mancuernas", "Aperturas Inclinadas", "Cruce Poleas Bajas", "Press Inclinado Smith", "Flexiones Pies Elevados"],
+        "Pecho Medio ⬅️➡️": ["Press Banca Plano", "Press Mancuernas", "Peck Deck", "Hammer Press", "Floor Press", "Flexiones", "Cruce Poleas Medias"],
+        "Pecho Inferior ⬇️": ["Press Declinado", "Dips (Fondos)", "Cruce Poleas Altas", "Aperturas Declinadas"],
+        "Espalda Amplitud 🦅": ["Dominadas Pronas", "Jalón al Pecho", "Pull-over Polea Alta", "Jalón Agarre Neutro", "Jalón Unilateral"],
+        "Espalda Grosor 🚣": ["Remo con Barra", "Remo Gironda", "Remo T", "Remo Mancuerna", "Remo Seal", "Remo Pendlay", "Remo Meadows"],
+        "Espalda Baja 🪵": ["Hiperextensiones Lumbar", "Peso Muerto Convencional", "Rack Pulls", "Superman"],
+        "Hombro Frontal 🔘": ["Press Militar", "Press Arnold", "Elevación Frontal Disco", "Frontales Polea"],
+        "Hombro Lateral 🔘": ["Elevaciones Laterales", "Laterales Polea", "Laterales Máquina", "Laterales Inclinado"],
+        "Hombro Posterior 🔘": ["Pájaros Mancuerna", "Facepull", "Peck Deck Inverso", "Pájaros Polea"],
+        "Bíceps 💪": ["Curl Barra Z", "Curl Martillo", "Curl Scott", "Curl Alterno", "Curl Araña", "Curl Concentrado", "Curl 21"],
+        "Tríceps 🦾": ["Press Francés Barra Z", "Polea Cuerda", "Copa Mancuerna", "Dips Paralelas", "Patada Polea", "Press Agarre Cerrado", "Skullcrushers"],
+        "Antebrazos ✊": ["Curl Muñeca Supino", "Curl Muñeca Prono", "Paseo Granjero", "Curl Inverso"],
+        "Abdomen 🍫": ["Crunch Polea Alta", "Elevación Piernas Colgado", "Rueda Abdominal", "Plancha", "Giros Rusos", "V-Ups"],
         "Trapecio 🐂": ["Encogimientos Mancuerna", "Encogimientos Barra", "Remo al Mentón"]
     };
 
-    let miDB = JSON.parse(localStorage.getItem('manuGymMax_v9')) || dbBase;
+    let miDB = JSON.parse(localStorage.getItem('manuGymMax_v11')) || dbBase;
     let rutinaActual = [];
 
-    function saveDB() { localStorage.setItem('manuGymMax_v9', JSON.stringify(miDB)); }
+    function saveDB() { localStorage.setItem('manuGymMax_v11', JSON.stringify(miDB)); }
 
     function updateList() {
         const m = document.getElementById('mGroup').value;
@@ -258,7 +263,7 @@
     }
 
     function showCustom() {
-        if(!document.getElementById('mGroup').value) return alert("Selecciona una zona");
+        if(!document.getElementById('mGroup').value) return;
         document.getElementById('customArea').style.display = 'block';
     }
 
@@ -288,11 +293,19 @@
     function addRoutine() {
         const m = document.getElementById('mGroup').value;
         const e = document.getElementById('exSelect').value;
-        const s = document.getElementById('sets').value;
-        const r = document.getElementById('reps').value;
-        if(!m || !e || !s || !r) return alert("Completa los campos");
+        const s = document.getElementById('sets').value || "4";
+        let r = document.getElementById('reps').value || "10-12";
+        
+        // Si el usuario escribe "fallo" o "al fallo", lo estandarizamos
+        if(r.toLowerCase().includes("fallo")) {
+            r = "al fallo 🧨";
+        }
+
+        if(!m || !e) return;
+
         rutinaActual.push({ m, e, s, r });
         render();
+        
         document.getElementById('sets').value = "";
         document.getElementById('reps').value = "";
     }
@@ -309,10 +322,10 @@
 
     function shareWA() {
         const name = document.getElementById('cName').value || "Campeón";
-        if(rutinaActual.length === 0) return alert("Añade ejercicios");
+        if(rutinaActual.length === 0) return;
         let txt = `*PLAN DE ENTRENAMIENTO: ${name.toUpperCase()}* 🏋️‍♂️🔥%0A%0A`;
         rutinaActual.forEach(x => {
-            txt += `⚡ *${x.m.toUpperCase()}*%0A   └ ${x.e} ➡️ *${x.s}x${x.r}*%0A%0A`;
+            txt += `⚡ *${x.m.toUpperCase()}*%0A   └ ${x.e} ➡️ *${x.s} x ${x.r}*%0A%0A`;
         });
         txt += `_¡Dale con todo!_ 💪🏁%0A*Coach Trainer*`;
         window.open(`https://api.whatsapp.com/send?text=${txt}`, '_blank');
